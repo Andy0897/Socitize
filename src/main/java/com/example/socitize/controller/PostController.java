@@ -7,6 +7,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/post")
 public class PostController {
-    @GetMapping("/create")
-    public String
+    /*@GetMapping("/create")
+    public String*/
 }
