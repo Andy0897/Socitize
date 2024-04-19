@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="partials/head"></head>
+<body>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-9 col-lg-7 col-xl-6 col-xxl-5">
+            <div class="card border-0 shadow-sm rounded-4">
+                <div class="card-body p-3 p-md-4 p-xl-5">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="mb-5">
+                                <h3>Sign Up</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <form th:action="@{/submit-user}" method="post" th:object="${user}">
+                        <div class="row gy-3 overflow-hidden">
+                            <div class="col-12">
+                                <div class="form-floating mb-3">
+                                    <input type="text" th:field="*{name}" class="form-control" id="name"
+                                           placeholder="Name">
+                                    <label for="name" class="form-label">Enter your Name</label>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-floating mb-3">
+                                    <input type="text" th:field="*{username}" class="form-control" id="username"
+                                           placeholder="Username">
+                                    <label for="username" class="form-label">Enter your Username</label>
+                                    <div th:if="${#fields.hasErrors('username')}" th:errors="*{username}"
+                                         class="alert alert-danger mt-3" role="alert"></div>
+                                    <div th:if="${existsUserByUsername}" th:text="|This username is already used|"
+                                         class="alert alert-danger mt-3" role="alert"></div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-floating mb-3">
+                                    <input type="email" th:field="*{email}" class="form-control" id="email"
+                                           placeholder="name@example.com">
+                                    <label for="email" class="form-label">Enter your Email</label>
+                                    <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
+                                         class="alert alert-danger mt-3" role="alert"></div>
+                                    <div th:if="${existsUserByEmail}" th:text="|This email is already used|"
+                                         class="alert alert-danger mt-3" role="alert"></div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-floating mb-3">
+                                    <input type="password" th:field="*{password}" class="form-control" id="password"
+                                           value=""
+                                           placeholder="Password">
+                                    <label for="password" class="form-label">Password</label>
+                                </div>
+                            </div>
+                            <div class="col-12">
+
+                            </div>
+                            <div class="col-12">
+                                <div class="mb-5">
+                                    <h5>Choose Avatar</h5>
+                                </div>
+                                <ul id="icons-list" class="row row-cols-3 row-cols-sm-4 row-cols-lg-6
+                                row-cols-xl-8 list-unstyled list">
+                                    <li class="col mb-4" data-name="0-circle" data-tags="number numeral"
+                                        data-categories="shapes" th:each="avatar : ${avatars}" style="margin: 20px;">
+                                        <input th:field="${user.avatar}" class="form-check-input mt-0 bg-dark" type="radio"
+                                               name="avatar" th:value="${avatar.id}"
+                                               aria-label="Radio button for following text input">
+                                        <img th:src="${avatar.url}" style="height: 100px; width: 100px;">
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-12">
+                                <div class="d-grid">
+                                    <button class="btn bsb-btn-2xl btn-dark" type="submit">Sign Up</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="row">
+                        <div class="col-12">
+                            <hr class="mt-2 mb-4 border-secondary-subtle">
+                            <div class="d-flex gap-2 gap-md-4 flex-column flex-md-row justify-content-md-end">
+                                <a href="/sign-up" class="link-secondary text-decoration-none">Already have an
+                                    account?</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
