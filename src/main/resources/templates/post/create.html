@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="@{partials/head}"></head>
+<body>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-9 col-lg-7 col-xl-6 col-xxl-5">
+            <div class="card border-0 shadow-sm rounded-4">
+                <div class="card-body p-3 p-md-4 p-xl-5">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="mb-3">
+                                <h3>Create Post</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <form th:action="@{/post/submit}" method="post" enctype="multipart/form-data" th:object="${post}">
+                        <div class="row gy-3 overflow-hidden">
+                            <div class="col-12">
+                                <div class="form-floating mb-3">
+                                    <input type="text" th:field="*{text}" class="form-control" id="text"
+                                           placeholder="Text">
+                                    <label for="text" class="form-label">Add Text to your Post</label>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="input-group mb-3">
+                                    <input type="hidden" th:field="*{image}">
+                                    <label for="fileImage">Image</label>
+                                    <input type="file" class="form-control" id="fileImage" name="Image">
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="d-grid">
+                                    <button class="btn bsb-btn-2xl btn-dark" type="submit">Publish</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

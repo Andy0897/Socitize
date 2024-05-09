@@ -9,10 +9,10 @@ public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
+    @Nullable
     @Max(value = 500, message = "The text must contain less than 500 symbols")
     private String text;
-    @Lob
-    private byte[] image;
+    private String image;
     @ManyToOne
     private User user;
 
@@ -32,11 +32,11 @@ public class Post {
         this.text = text;
     }
 
-    public byte[] getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(byte[] image) {
+    public void setImage(String image) {
         this.image = image;
     }
 

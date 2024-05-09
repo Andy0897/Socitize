@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -35,14 +36,14 @@ public class PostController {
     }
 
     @PostMapping("/submit")
-    public String submitCreatePost(@ModelAttribute @Valid Post post, BindingResult bindingResult, Model model) {
-
+    public String submitCreatePost(@ModelAttribute @Valid Post post, @RequestParam("image")MultipartFile multipartFile) throws IOException {
+        return postService.submitCreatePost(post, multipartFile);
     }
 
     @GetMapping("/home")
-    public String index(Model model){
-        model.addAttribute("clothingItems", postRepository.findAll());
-        return "index";
+    public String getHome(Model model){
+        model.addAttribute("posts", postRepository.findAll());
+        return "home";
     }
 
     @GetMapping("/display/image/{id}")
@@ -52,7 +53,6 @@ public class PostController {
 
         Post post = postRepository.getPostById(id);
 
-        InputStream is = new ByteArrayInputStream(post.getImage());
-        IOUtils.copy(is, response.getOutputStream());
+
     }
 }
