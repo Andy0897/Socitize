@@ -36,11 +36,11 @@ public class PostController {
     }
 
     @PostMapping("/submit")
-    public String submitCreatePost(@ModelAttribute @Valid Post post, @RequestParam("image")MultipartFile multipartFile) throws IOException {
+    public String submitCreatePost(@ModelAttribute @Valid Post post, @RequestParam("Image")MultipartFile multipartFile) throws IOException {
         return postService.submitCreatePost(post, multipartFile);
     }
 
-    @GetMapping("/home")
+    @GetMapping("/home") 
     public String getHome(Model model){
         model.addAttribute("posts", postRepository.findAll());
         return "home";
