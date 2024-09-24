@@ -29,7 +29,7 @@ public class WebSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers("/", "/home").permitAll()
+                        .requestMatchers("/", "/home", "/access-denied").permitAll()
                         .requestMatchers("/sign-in", "/sign-up", "/submit-user").anonymous()
                         .requestMatchers("/avatar/**").hasAuthority("ADMIN")
                         .anyRequest().authenticated()
@@ -38,7 +38,7 @@ public class WebSecurityConfig {
                         .loginPage("/sign-in")
                         .usernameParameter("usernameOrEmail")
                         .passwordParameter("password")
-                        .defaultSuccessUrl("/profile")
+                        .defaultSuccessUrl("/profile", true)
                         .permitAll()
                 )
                 .exceptionHandling(exceptionHandling -> exceptionHandling

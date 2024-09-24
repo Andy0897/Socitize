@@ -38,10 +38,23 @@ public class UserController {
         model.addAttribute("avatars", avatarRepository.findAll());
         return "sign-up";
     }
+    @GetMapping("/edit-profile")
+    public String getEditProfile(Principal principal, Model model) {
+        User user = userService.getUserByUsername(principal.getName());
+        model.addAttribute("user", user);
+        model.addAttribute("avatars", avatarRepository.findAll());
+        System.out.println(user.getUsername());
+        return "edit-profile";
+    }
 
     @PostMapping("/submit-user")
     public String submitUser(User user, BindingResult bindingResult, Model model) {
         return userService.submitUser(user, bindingResult, model);
+    }
+
+    @PostMapping("/submit-edit-user")
+    public String submitUserEdit(User user, BindingResult bindingResult, Model model) {
+        return userService.submitEditUser(user, bindingResult, model);
     }
 
     @GetMapping("/profile")
@@ -49,5 +62,11 @@ public class UserController {
         User user = userService.getUserByUsername(principal.getName());
         model.addAttribute("user", user);
         return "profile";
+    }
+
+    @GetMapping("/access-denied")
+    @ResponseBody
+    public String getAccessDenied() {
+        return "Access Denied";
     }
 }

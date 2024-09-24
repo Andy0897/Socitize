@@ -1,47 +1,25 @@
 package com.example.socitize.service;
 
 import com.example.socitize.entity.Post;
-import com.example.socitize.entity.User;
 import com.example.socitize.repository.PostRepository;
-import com.example.socitize.util.FileUploadUtil;
+import com.example.socitize.repository.UserRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
-import org.springframework.util.StringUtils;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.security.Principal;
 
 @Service
 public class PostService {
     PostRepository postRepository;
+    UserRepository userRepository;
 
-    public PostService(PostRepository postRepository) {
+    public PostService(PostRepository postRepository, UserRepository userRepository) {
         this.postRepository = postRepository;
+        this.userRepository = userRepository;
     }
 
-    public String submitCreatePost(Post post, MultipartFile multipartFile) throws IOException {
-        if (!multipartFile.isEmpty()) {
-            String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
-            post.setImage(fileName);
-            Post savedPost = postRepository.save(post);
-            String upload = "/Posts/Images/" + post.getId();
-            FileUploadUtil.saveFile(upload, fileName, multipartFile);
-        } else {
-            if(post.getImage().isEmpty()) {
-                post.setImage(null);
-                postRepository.save(post);
-            }
-        }
+    public String submitPost(Post post, Principal principal) {
+        post.setUser(userRepository.getUserByUsername(principal.getName()));
         postRepository.save(post);
-        return "redirect:/profile";
+        return "redirect:/post/show";
     }
 }
-
-//https://www.youtube.com/watch?v=9uCAGlrpBbw

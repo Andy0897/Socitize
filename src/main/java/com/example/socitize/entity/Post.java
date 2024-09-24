@@ -1,18 +1,16 @@
 package com.example.socitize.entity;
 
-import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Max;
 
 @Entity
+@Table(name = "posts")
 public class Post {
+    @Column(name = "post_id")
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @Nullable
-    @Max(value = 500, message = "The text must contain less than 500 symbols")
     private String text;
-    private String image;
+    @JoinColumn(name = "user_id")
     @ManyToOne
     private User user;
 
@@ -30,14 +28,6 @@ public class Post {
 
     public void setText(String text) {
         this.text = text;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
     }
 
     public User getUser() {
