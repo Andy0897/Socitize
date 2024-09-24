@@ -53,8 +53,8 @@ public class UserController {
     }
 
     @PostMapping("/submit-edit-user")
-    public String submitUserEdit(User user, BindingResult bindingResult, Model model) {
-        return userService.submitEditUser(user, bindingResult, model);
+    public String submitUserEdit(User user, Model model) {
+        return userService.submitEditUser(user, model);
     }
 
     @GetMapping("/profile")

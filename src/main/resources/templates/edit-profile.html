@@ -10,34 +10,13 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="mb-4">
-                                <h2>Edit Profile</h2>
+                                <h2>Edit Avatar</h2>
                             </div>
                         </div>
                     </div>
                     <form th:action="@{/submit-edit-user}" method="post" th:object="${user}">
                         <div class="row gy-3 overflow-hidden">
                             <div class="col-12">
-                                <div class="form-floating mb-3">
-                                    <input type="text" th:field="*{name}" class="form-control" id="name"
-                                           placeholder="Name">
-                                    <label for="name" class="form-label">Enter your Name</label>
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <div class="form-floating mb-3">
-                                    <input type="text" th:field="*{username}" class="form-control" id="username"
-                                           placeholder="Username">
-                                    <label for="username" class="form-label">Enter your Username</label>
-                                    <div th:if="${#fields.hasErrors('username')}" th:errors="*{username}"
-                                         class="alert alert-danger mt-3" role="alert"></div>
-                                    <div th:if="${existsUserByUsername}" th:text="|This username is already used|"
-                                         class="alert alert-danger mt-3" role="alert"></div>
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <div class="mb-5">
-                                    <h5>Choose Avatar</h5>
-                                </div>
                                 <ul id="icons-list" class="row row-cols-3 row-cols-sm-4 row-cols-lg-6
                                 row-cols-xl-8 list-unstyled list">
                                     <li class="col mb-4" data-name="0-circle" data-tags="number numeral"

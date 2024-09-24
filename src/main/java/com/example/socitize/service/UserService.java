@@ -35,13 +35,9 @@ public class UserService {
         return "redirect:/sign-in";
     }
 
-    public String submitEditUser(@Valid User user, BindingResult bindingResult, Model model) {
-        if (bindingResult.hasErrors() || (checkIfExistsUserByUsername(user.getUsername()) && !(userRepository.getUserByUsername(user.getUsername()).getEmail().equals(user.getEmail())))) {
-            model.addAttribute("existsUserByUsername", checkIfExistsUserByUsername(user.getUsername()));
-            model.addAttribute("user", user);
-            model.addAttribute("avatars", avatarRepository.findAll());
-            return "edit-profile";
-        }
+    public String submitEditUser(User user, Model model) {
+        model.addAttribute("user", user);
+        model.addAttribute("avatars", avatarRepository.findAll());
         userRepository.save(user);
         return "redirect:/profile";
     }
