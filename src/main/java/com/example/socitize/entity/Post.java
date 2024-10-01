@@ -9,7 +9,7 @@ public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private String text;
+    private String content;
     @JoinColumn(name = "user_id")
     @ManyToOne
     private User user;
@@ -22,12 +22,12 @@ public class Post {
         this.id = id;
     }
 
-    public String getText() {
-        return text;
+    public String getContent() {
+        return content;
     }
 
-    public void setText(String text) {
-        this.text = text;
+    public void setContent(String content) {
+        this.content = content;
     }
 
     public User getUser() {

@@ -1,7 +1,9 @@
 package com.example.socitize.controller;
 
+import com.example.socitize.entity.Avatar;
 import com.example.socitize.entity.User;
 import com.example.socitize.repository.AvatarRepository;
+import com.example.socitize.repository.PostRepository;
 import com.example.socitize.repository.UserRepository;
 import com.example.socitize.service.UserService;
 import jakarta.validation.Valid;
@@ -20,10 +22,14 @@ import java.util.List;
 public class UserController {
     UserService userService;
     AvatarRepository avatarRepository;
+    UserRepository userRepository;
+    PostRepository postRepository;
 
-    public UserController(UserService userService, AvatarRepository avatarRepository) {
+    public UserController(UserService userService, AvatarRepository avatarRepository, UserRepository userRepository, PostRepository postRepository) {
         this.userService = userService;
         this.avatarRepository = avatarRepository;
+        this.userRepository = userRepository;
+        this.postRepository = postRepository;
     }
 
     @GetMapping("/sign-in")
@@ -38,29 +44,30 @@ public class UserController {
         model.addAttribute("avatars", avatarRepository.findAll());
         return "sign-up";
     }
-    @GetMapping("/edit-profile")
-    public String getEditProfile(Principal principal, Model model) {
-        User user = userService.getUserByUsername(principal.getName());
-        model.addAttribute("user", user);
-        model.addAttribute("avatars", avatarRepository.findAll());
-        System.out.println(user.getUsername());
-        return "edit-profile";
-    }
 
     @PostMapping("/submit-user")
     public String submitUser(User user, BindingResult bindingResult, Model model) {
         return userService.submitUser(user, bindingResult, model);
     }
 
-    @PostMapping("/submit-edit-user")
-    public String submitUserEdit(User user, Model model) {
-        return userService.submitEditUser(user, model);
+    @GetMapping("/edit-avatar")
+    public String getEditAvatar(Principal principal, Model model) {
+        User user = userRepository.getUserByUsername(principal.getName());
+        model.addAttribute("user", user);
+        model.addAttribute("avatars", avatarRepository.findAll());
+        return "edit-avatar";
+    }
+
+    @PostMapping("/submit-edit-avatar")
+    public String submitEditAvatar(User user, Model model, Principal principal) {
+        return userService.submitEditAvatar(user, model, principal);
     }
 
     @GetMapping("/profile")
     public String getProfile(Model model, Principal principal) {
         User user = userService.getUserByUsername(principal.getName());
         model.addAttribute("user", user);
+        model.addAttribute("posts", postRepository.getPostsByUser(user));
         return "profile";
     }
 

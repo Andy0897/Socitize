@@ -1,5 +1,6 @@
 package com.example.socitize.service;
 
+import com.example.socitize.entity.Avatar;
 import com.example.socitize.repository.AvatarRepository;
 import com.example.socitize.repository.UserRepository;
 import com.example.socitize.entity.User;
@@ -8,6 +9,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+
+import java.security.Principal;
 
 @Service
 public class UserService {
@@ -35,9 +38,15 @@ public class UserService {
         return "redirect:/sign-in";
     }
 
-    public String submitEditUser(User user, Model model) {
-        model.addAttribute("user", user);
-        model.addAttribute("avatars", avatarRepository.findAll());
+    public String submitEditAvatar(User user, Model model, Principal principal) {
+        User currentUser = userRepository.getUserByUsername(principal.getName());
+        user.setId(currentUser.getId());
+        user.setUsername(currentUser.getUsername());
+        user.setEmail(currentUser.getEmail());
+        user.setPassword(currentUser.getPassword());
+        user.setRole(currentUser.getRole());
+        user.setName(currentUser.getName());
+        user.setBio(currentUser.getBio());
         userRepository.save(user);
         return "redirect:/profile";
     }
