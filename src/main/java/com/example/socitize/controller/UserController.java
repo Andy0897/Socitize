@@ -67,7 +67,8 @@ public class UserController {
     public String getProfile(Model model, Principal principal) {
         User user = userService.getUserByUsername(principal.getName());
         model.addAttribute("user", user);
-        model.addAttribute("posts", postRepository.getPostsByUser(user));
+        model.addAttribute("posts", postRepository.findByUserId(user.getId()));
+        System.out.println(postRepository.findByUserId(user.getId()).get(0).getContent());
         return "profile";
     }
 
