@@ -26,20 +26,28 @@
                             </button>
                         </form>
                     </div>
-                    <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" th:each="post : ${posts}">
+                    <hr class="mt-2 mb-2 border-secondary-subtle">
+                    <div class="row mb-2">
+                        <div class="col container">
+                            <h4 class="text-muted">Posts</h4>
+                        </div>
+                    </div>
+                    <div class="toast container" role="alert" aria-live="assertive" aria-atomic="true"
+                         th:each="post : ${posts}" style="display: block;">
                         <div class="toast-header">
-                            <img th:src="${user.avatar.url}" class="rounded me-2" alt="...">
+                            <img th:src="${user.avatar.url}" class="rounded-circle me-2" width="20px">
                             <strong class="me-auto" th:text="${user.username}"></strong>
                             <small>11 mins ago</small>
-                            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
                         </div>
-                        <div class="toast-body" th:text="${post.content}">
+                        <div class="toast-body" th:text="${post.content}" style="text-align: left;">
                         </div>
                     </div>
                 </div>
+
             </div>
         </div>
     </div>
+</div>
 </div>
 </body>
 </html>
