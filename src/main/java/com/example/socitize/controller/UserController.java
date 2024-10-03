@@ -45,6 +45,12 @@ public class UserController {
         return "sign-up";
     }
 
+    @GetMapping("/home")
+    public String getHome(Model model) {
+        model.addAttribute("posts", postRepository.findAll());
+        return "home";
+    }
+
     @PostMapping("/submit-user")
     public String submitUser(User user, BindingResult bindingResult, Model model) {
         return userService.submitUser(user, bindingResult, model);
